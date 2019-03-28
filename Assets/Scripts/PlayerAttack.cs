@@ -80,10 +80,14 @@ public class PlayerAttack : MonoBehaviour {
         fireBallTemp = GameObject.Instantiate(fireBall);
         fireBallTemp.transform.position = new Vector3(player.transform.position.x + (1f * playerFace), player.transform.position.y - 0.2f,
                                                     player.transform.position.z);
+    
+        fireBallTemp.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
 
         attackButton = false;
         fireBallTemp.GetComponent<Rigidbody2D>().velocity =
                     new Vector2(fireBallSpeed * playerFace, fireBallTemp.GetComponent<Rigidbody2D>().velocity.y);
+
+        Destroy(fireBallTemp, 0.8f);
         
 
     }
