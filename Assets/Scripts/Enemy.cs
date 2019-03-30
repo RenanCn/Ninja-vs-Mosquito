@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
 
 
     [SerializeField]
@@ -10,16 +12,18 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     private float speed = 3f;
 
-    AudioSource audioSource;
 
-      
+   /* AudioSource audioSource;
+    [SerializeField]
+    private AudioClip hurtSound;
+    */
 
 
     // Use this for initialization
     void Start()
     {
 
-        audioSource = gameObject.GetComponent<AudioSource>();
+       // audioSource = gameObject.GetComponent<AudioSource>();
 
     }
 
@@ -35,18 +39,19 @@ public class Enemy : MonoBehaviour {
         {
             transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
         }
-              
+
     }
-
-
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            //other.gameObject.GetComponent<PlayerLife>().PerdeVida();
+            // audioSource.clip = hurtSound;
+            //  audioSource.Play();
+            GameManager.score = 0;
+            PlayerPrefs.SetInt("pontuacao", GameManager.score);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
-
 
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AttackEffect : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class AttackEffect : MonoBehaviour {
     [SerializeField]
     private float verticalForce = 10;
     [SerializeField]
-    private float tempoDeDestruicao = 0;
+    private float destroyTime = 0;
 
     AudioSource audioSource;
 
@@ -19,6 +20,8 @@ public class AttackEffect : MonoBehaviour {
     {
         patternHorizontalForce = horizontalForce;
         audioSource = gameObject.GetComponent<AudioSource>();
+
+        
     }
 
 
@@ -27,6 +30,14 @@ public class AttackEffect : MonoBehaviour {
         
         if (other.gameObject.CompareTag("Enemy"))
         {
+            GameManager.score += 10;
+            PlayerPrefs.SetInt("pontuacao", GameManager.score);
+
+            if (GameManager.score > PlayerPrefs.GetInt("record"))
+            {
+                PlayerPrefs.SetInt("record", GameManager.score);
+            }
+            //score_text.text = score.ToString();
             // audioSource.Play();
             other.gameObject.GetComponent<Enemy>().enabled = false; // desativa script
 
@@ -46,7 +57,7 @@ public class AttackEffect : MonoBehaviour {
             other.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(horizontalForce, verticalForce),
                 ForceMode2D.Impulse);
 
-            Destroy(other.gameObject, tempoDeDestruicao);
+            Destroy(other.gameObject, destroyTime);
 
             horizontalForce = patternHorizontalForce;
         }

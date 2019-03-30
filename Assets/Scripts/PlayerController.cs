@@ -76,11 +76,12 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        
 
         /* Controle da movimentação */
         // float h;
-        //  h = moveButton;
-        h = Input.GetAxisRaw("Horizontal");
+        h = moveButton;
+        //h = Input.GetAxisRaw("Horizontal");
 
         anim.SetFloat("Velocity", Mathf.Abs(h));
 
@@ -127,6 +128,7 @@ public class PlayerController : MonoBehaviour {
         theScale.x *= -1;
         transform.localScale = theScale;
     }
+
 
 
 }

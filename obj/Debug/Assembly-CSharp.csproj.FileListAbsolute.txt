@@ -1,2 +1,0 @@
-C:\Users\Renan\Desktop\Projetos Unity\Mosquito\New Unity Project\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
-C:\Users\Renan\Desktop\Projetos Unity\Mosquito\New Unity Project\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache

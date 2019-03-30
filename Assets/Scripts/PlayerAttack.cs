@@ -16,21 +16,32 @@ public class PlayerAttack : MonoBehaviour {
     private GameObject player;
 
     [SerializeField]
-    private float intervaloDeAtaque = 0;
-    private float proximoAtaque;
+    private float attackCoolDown = 0;
+    private float nextAttack;
 
     [SerializeField]
     private AudioClip swordSound;
+
+    [SerializeField]
+    private AudioClip spellSound;
+
     private AudioSource audioSource;
 
     private int playerFace = 1;
 
     private bool attackButton = false;
+    private bool spellButton = false;
 
     public bool AttackButton
     {
         get { return attackButton; }
         set { attackButton = value; }
+    }
+
+    public bool SpellButton
+    {
+        get { return spellButton; }
+        set { spellButton = value; }
     }
 
     // Use this for initialization
@@ -46,10 +57,15 @@ public class PlayerAttack : MonoBehaviour {
     {
 
         //if ((Input.GetButtonDown("Fire1") && Time.time > proximoAtaque))
-        if ((attackButton == true && Time.time > proximoAtaque))
+        if ((attackButton == true && Time.time > nextAttack))
         {
             attackButton = false;
-            //Attacking();
+            Attacking();
+        }
+
+        if ((spellButton == true && Time.time > nextAttack))
+        {
+            spellButton = false;
             Fireball();
         }
     }
@@ -60,7 +76,7 @@ public class PlayerAttack : MonoBehaviour {
         audioSource.Play();
 
         anim.SetTrigger("Attack");
-        proximoAtaque = Time.time + intervaloDeAtaque;
+        nextAttack = Time.time + attackCoolDown;
     }
 
     void Fireball()
@@ -75,7 +91,9 @@ public class PlayerAttack : MonoBehaviour {
             
         }
 
-       
+        audioSource.clip = spellSound;
+        audioSource.Play();
+
         anim.SetTrigger("Skill");
         fireBallTemp = GameObject.Instantiate(fireBall);
         fireBallTemp.transform.position = new Vector3(player.transform.position.x + (1f * playerFace), player.transform.position.y - 0.2f,
